@@ -5,10 +5,19 @@
   padding: 0;
 }
 
+:root {
+  --brand-red: #ff003b;
+  --brand-gold: #e3a535;
+  --text-color: #222;
+  --muted: #666;
+  --card-border: #e6e6e6;
+  --surface: #ffffff;
+  --soft-shadow: 0 6px 18px rgba(15, 15, 15, 0.06);
+}
 /* —— body + fonts —— */
 body {
   font-family: "Montserrat", Arial, Helvetica, sans-serif;
-  color: #333;
+  color: var(--text-color);
   display: flex;
   justify-content: center;
 }
@@ -26,14 +35,15 @@ body {
 }
 
 .logo {
-  width: 250px;
+  width: 220px;
   margin-bottom: 15px;
 }
 
 .site-title {
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 700;
   margin-bottom: 10px;
+  color: var(--brand-red);
 }
 
 /* category filter */
@@ -44,26 +54,31 @@ body {
 
 .search-section select {
   width: 100%;
-  padding: 16px;
-  font-size: 18px;
-  border: 2px solid #000;
-  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 2px solid var(--brand-gold);
+  border-radius: 10px;
   cursor: pointer;
-  background-color: white;
-  font-weight: 500;
+  background-color: var(--surface);
+  font-weight: 600;
 }
 
 .search-section select:focus {
   outline: none;
-  border-color: #666;
+  border-color: var(--brand-red);
 }
 
 /* chat section */
 .chatbox {
   margin: 40px 0;
-  border: 2px solid #000;
-  border-radius: 8px;
-  padding: 26px;
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(227, 165, 53, 0.03),
+    rgba(255, 0, 59, 0.01)
+  );
 }
 
 .chatbox h2 {
@@ -86,7 +101,7 @@ body {
   width: 100%;
   text-align: center;
   padding: 40px;
-  color: #666;
+  color: var(--muted);
   font-size: 18px;
 }
 
@@ -102,7 +117,7 @@ body {
   padding: 12px;
   font-size: 18px;
   border: none;
-  border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid var(--card-border);
   background: transparent;
 }
 
@@ -113,7 +128,7 @@ body {
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: linear-gradient(90deg, var(--brand-red), var(--brand-gold));
   color: #fff;
   border: none;
   padding: 12px;
@@ -131,8 +146,8 @@ body {
 }
 
 .chat-form button:focus {
-  outline: 2px solid #000;
-  outline-offset: 2px;
+  outline: 3px solid rgba(227, 165, 53, 0.16);
+  outline-offset: 3px;
 }
 
 /* visually hidden */
@@ -162,7 +177,7 @@ body {
 
 .site-footer a {
   margin: 0 8px;
-  color: #000;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -180,12 +195,15 @@ body {
 
 .product-card {
   flex: 0 1 calc(33.333% - 14px);
-  border: 1px solid #ccc;
-  padding: 15px;
-  border-radius: 4px;
+  border: 1px solid var(--card-border);
+  padding: 16px;
+  border-radius: 12px;
   display: flex;
   gap: 15px;
   min-height: 160px;
+  background: var(--surface);
+  transition: transform 180ms ease, box-shadow 180ms ease,
+    border-color 180ms ease;
 }
 
 .product-card img {
@@ -205,12 +223,62 @@ body {
 
 .product-card h3 {
   font-size: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  color: var(--text-color);
 }
 
 .product-card p {
   font-size: 14px;
-  color: #666;
+  color: var(--muted);
+}
+
+/* visually indicate a selected product card */
+.product-card.selected {
+  border-color: var(--brand-red);
+  box-shadow: 0 14px 36px rgba(255, 0, 59, 0.08),
+    0 6px 18px rgba(227, 165, 53, 0.04);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 0, 59, 0.03),
+    rgba(227, 165, 53, 0.02)
+  );
+}
+
+/* cursor + focus styles to make cards feel interactive */
+.product-card {
+  cursor: pointer;
+}
+.product-card:focus {
+  outline: 3px solid rgba(227, 165, 53, 0.18);
+  outline-offset: 2px;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--soft-shadow);
+}
+
+/* selected products list items */
+.selected-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  background: #fff;
+  font-size: 14px;
+}
+.selected-item .remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--brand-red);
+  cursor: pointer;
+  font-weight: 700;
+}
+.selected-item .remove-btn:focus {
+  outline: 2px solid #c33;
+  outline-offset: 2px;
 }
 
 /* selected products */
@@ -235,21 +303,92 @@ body {
 .generate-btn {
   width: 100%;
   margin-top: 20px;
-  padding: 16px;
+  padding: 14px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 700;
   color: #fff;
-  background: #000;
+  background: linear-gradient(90deg, var(--brand-red), var(--brand-gold));
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
 .generate-btn:hover {
-  background: #666;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(255, 0, 59, 0.12);
 }
 
 .generate-btn i {
   margin-right: 8px;
+}
+
+/* clear selections button - secondary action */
+.clear-btn,
+#clearSelections {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brand-red);
+  background: transparent;
+  border: 2px solid var(--brand-red);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease, transform 120ms ease;
+}
+
+.clear-btn:hover {
+  background: rgba(255, 0, 59, 0.06);
+  color: var(--brand-red);
+  transform: translateY(-2px);
+}
+
+.clear-btn:focus {
+  outline: 3px solid rgba(255, 0, 59, 0.12);
+  outline-offset: 3px;
+}
+
+.clear-btn:disabled,
+#clearSelections[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* product description reveal & info button */
+.product-card {
+  position: relative;
+}
+.info-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 600;
+  color: #333;
+}
+.info-btn:focus {
+  outline: 3px solid rgba(0, 87, 184, 0.18);
+  outline-offset: 2px;
+}
+.product-desc {
+  display: none;
+  margin-top: 10px;
+  font-size: 13px;
+  color: #444;
+  line-height: 1.4;
+}
+.product-desc.open {
+  display: block;
 }
